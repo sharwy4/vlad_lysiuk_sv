@@ -1,0 +1,374 @@
+% =====================================================================
+%  ПОРТФОЛІО ІНЖЕНЕРА-РОЗРОБНИКА ДРУКОВАНИХ ПЛАТ
+%  Владислав Лисюк
+%
+%  Як зібрати:  xelatex portfolio.tex      (двічі — заради змісту/полів)
+%  Або просто:  build.bat  /  make
+%
+%  Рушій ОБОВ'ЯЗКОВО XeLaTeX або LuaLaTeX (потрібен fontspec для кирилиці).
+%  pdflatex НЕ підійде.
+% =====================================================================
+
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Поля сторінки (15 мм з усіх боків) ----------
+\usepackage[a4paper,margin=15mm,bottom=18mm,footskip=8mm]{geometry}
+
+% ---------- Шрифти та мова ----------
+% Використано DejaVu Sans Condensed — є в системі, має повну кирилицю.
+% Щоб змінити шрифт, просто впишіть іншу назву (напр. "Segoe UI" або "Calibri").
+\usepackage{fontspec}
+\setmainfont{DejaVu Sans Condensed}
+\newfontfamily\headingfont{DejaVu Sans Condensed}
+
+\usepackage{polyglossia}
+\setdefaultlanguage{ukrainian}
+
+% ---------- Графіка, кольори, допоміжні пакети ----------
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}          % компактні списки
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{ragged2e}
+
+% ---------- ПАЛІТРА (тут міняти кольори) ----------
+\definecolor{accent}{HTML}{0F5C4A}   % акцент — темно-зелений
+\definecolor{ink}{HTML}{14181D}      % основний текст
+\definecolor{muted}{HTML}{5D6772}    % сірий для метаданих і підписів
+\definecolor{chipbg}{HTML}{EEF3F1}   % заливка «чипів»
+\definecolor{line}{HTML}{D7DDE3}     % тонкі лінії та рамки
+
+\color{ink}
+
+% ---------- Колонтитул: номер сторінки внизу праворуч ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[R]{\footnotesize\color{muted}\thepage}
+
+% Без відступів на початку абзацу, невеликий проміжок між абзацами
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+% Заборонити «висячі» рядки
+\widowpenalty=10000
+\clubpenalty=10000
+
+% =====================================================================
+%  ВЛАСНІ КОМАНДИ — далі ними описано весь документ
+% =====================================================================
+
+% ---- «Чип»: короткий тег у рамці зі світлою заливкою ----
+\newtcbox{\chip}{on line, boxsep=0pt, left=5pt, right=5pt, top=3pt, bottom=3pt,
+  colframe=line, colback=chipbg, boxrule=0.4pt, arc=3pt,
+  fontupper=\footnotesize\color{accent!85!black}}
+
+% ---- Шапка проєкту ----
+% #1 — надзаголовок («ПРОЄКТ 01»), #2 — назва, #3 — рядок метаданих
+\newcommand{\projecthead}[3]{%
+  {\footnotesize\color{muted}\addfontfeature{LetterSpace=25}\MakeUppercase{#1}}\\[3pt]
+  {\LARGE\bfseries\color{ink}#2}\\[4pt]
+  {\footnotesize\color{muted}#3}\par
+  \vspace{4pt}
+  \hrulecolor{line}{0.6pt}
+  \vspace{8pt}
+}
+
+% ---- Ряд «чипів»: \chips{\chip{...}\cs\chip{...}} ----
+% (рядок вирівняно ліворуч, тож зайві чипи переносяться на новий рядок)
+\newcommand{\chips}[1]{\par\noindent{\raggedright #1\par}\vspace{2pt}}
+
+% ---- Проміжок між «чипами» ----
+% (дозволяє перенести ряд чипів на новий рядок, якщо вони не вміщуються)
+\newcommand{\cs}{\hskip3pt\penalty0\hskip0pt\relax}
+
+% ---- Горизонтальна лінія на всю ширину ----
+% #1 — колір, #2 — товщина
+\newcommand{\hrulecolor}[2]{\par\noindent{\color{#1}\rule{\linewidth}{#2}}\par}
+
+% ---- Блок «Моя роль»: вертикальна лінія акценту ліворуч ----
+\newtcolorbox{rolebox}{enhanced, breakable=false, colback=white,
+  boxrule=0pt, frame hidden, sharp corners,
+  borderline west={2pt}{0pt}{accent},
+  left=10pt, right=0pt, top=5pt, bottom=5pt, boxsep=0pt}
+
+\newcommand{\role}[1]{%
+  \par\vspace{6pt}
+  \begin{rolebox}
+    \small\justifying{\bfseries\color{accent}Моя роль.} #1
+  \end{rolebox}
+  \par\vspace{4pt}
+}
+
+% ---- ТЕЗИ під шапкою проєкту ----
+% Короткі тези: під які вимоги плату спроєктовано / що саме адаптовано.
+% Використання:
+%   \notes{
+%     \tz Перший рядок.
+%     \tz Другий рядок.
+%   }
+\newcommand{\tz}{\item}
+\newcommand{\notes}[1]{%
+  \par\vspace{2pt}
+  {\footnotesize\color{muted}%
+   \begin{itemize}[leftmargin=12pt, itemsep=1pt, topsep=2pt, parsep=0pt,
+     label=\textcolor{muted}{\rule{3pt}{3pt}}]
+     #1
+   \end{itemize}}%
+  \par\vspace{2pt}
+}
+
+% ---- Марковані пункти ----
+\newenvironment{points}
+  {\begin{itemize}[leftmargin=14pt, itemsep=3pt, topsep=4pt, parsep=0pt,
+     label=\textcolor{accent}{\small$\bullet$}]\small\justifying}
+  {\end{itemize}}
+
+% ---- ЗОБРАЖЕННЯ НА ВСЮ ШИРИНУ ----
+% #1 — [необов'язково] максимальна висота (частка \textheight), типово 0.42
+% #2 — файл, #3 — підпис
+% Усе загорнуто в minipage: LaTeX ніколи не розриває minipage між сторінками,
+% тож зображення разом із підписом завжди переходить на наступну сторінку цілком.
+\newcommand{\bigimg}[3][0.42]{%
+  \par\vspace{6pt}
+  \noindent
+  \begin{minipage}{\linewidth}
+    \centering
+    \setlength{\fboxrule}{0.4pt}\setlength{\fboxsep}{2pt}%
+    \fcolorbox{line}{white}{\includegraphics[width=\dimexpr\linewidth-6pt\relax,
+                                            height=#1\textheight,
+                                            keepaspectratio]{#2}}\\[3pt]
+    {\footnotesize\color{muted}#3}
+  \end{minipage}
+  \par\vspace{8pt}
+}
+
+% ---- ПАРА ЗОБРАЖЕНЬ У ОДИН РЯД ----
+% #1 — [необов'язково] максимальна висота, типово 0.30
+% #2/#3 — файл і підпис лівого; #4/#5 — файл і підпис правого
+\newcommand{\pairimg}[5][0.30]{%
+  \par\vspace{6pt}
+  \noindent
+  \begin{minipage}{\linewidth}
+    \setlength{\fboxrule}{0.4pt}\setlength{\fboxsep}{2pt}%
+    \begin{minipage}[t]{0.485\linewidth}
+      \centering
+      \fcolorbox{line}{white}{\includegraphics[width=\dimexpr\linewidth-6pt\relax,
+                                              height=#1\textheight,
+                                              keepaspectratio]{#2}}\\[3pt]
+      {\footnotesize\color{muted}#3}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.485\linewidth}
+      \centering
+      \fcolorbox{line}{white}{\includegraphics[width=\dimexpr\linewidth-6pt\relax,
+                                              height=#1\textheight,
+                                              keepaspectratio]{#4}}\\[3pt]
+      {\footnotesize\color{muted}#5}
+    \end{minipage}
+  \end{minipage}
+  \par\vspace{8pt}
+}
+
+\usepackage{calc}   % потрібен для \heightof у блоці «Моя роль»
+
+\graphicspath{{images/}}
+
+% =====================================================================
+%  ДОКУМЕНТ
+% =====================================================================
+\begin{document}
+
+% Документ починається одразу з першого проєкту — без шапки з контактами
+% та без вступного абзацу.
+% Проєкти впорядковані хронологічно: від першої роботи до останньої.
+
+% ---------------------------------------------------------------
+%  ПРОЄКТ 01 — термометр на ATtiny13 (курсовий проєкт)
+% ---------------------------------------------------------------
+\projecthead{Проєкт 01}%
+  {Термометр на ATtiny13}%
+  {Курсовий проєкт із дисципліни «Сучасні САПР РЕА» $\cdot$ 2 шари $\cdot$ 2023}
+
+\chips{\chip{Altium Designer}\cs\chip{2 шари}\cs\chip{ATtiny13}\cs\chip{Перша робота}}
+
+\notes{
+  \tz Перша самостійна робота в Altium Designer.
+  \tz Призначення - кімнатний термометр: датчик LM35, зсувні регістри 74HC595,
+      три 7-сегментні індикатори.
+}
+
+\role{Бібліотека компонентів, схема електрична принципова,  трасування
+ плати, комплект конструкторської документації.}
+
+\bigimg[0.28]{temp_iso.jpg}{3D-вигляд в Altium Designer.}
+\pairimg[0.30]{temp_3d_top.jpg}{Вигляд зверху.}%
+              {temp_layout.jpg}{Розводка, два шари.}
+
+% ---------------------------------------------------------------
+%  ПРОЄКТ 02 — плата віддаленої лабораторії силової електроніки
+% ---------------------------------------------------------------
+\clearpage
+\projecthead{Проєкт 02}%
+  {Плата віддаленої лабораторії силової електроніки}%
+  {Horizon Europe $\cdot$ NGI Search, грант № 101069364 $\cdot$ 2 шари $\cdot$ партія 5 шт $\cdot$ 2023--2024}
+
+\chips{\chip{Altium Designer}\cs\chip{Понижувальний перетворювач}\cs\chip{Horizon Europe}}
+
+\notes{
+  \tz Перший виробничий проєкт в якому брав участь - плата пройшла повний шлях від схеми до
+      виготовлення й монтажу.
+}
+
+\role{Бібліотека компонентів та оформлення схем в Altium Designer, компонування та
+трасування плати, повне складання й пайка всіх п'яти плат.}
+
+
+\bigimg[0.44]{buck_3d.jpg}{3D-вигляд в Altium Designer.}
+\bigimg[0.40]{buck_layout.jpg}{Розводка.}
+\bigimg[0.40]{ngi_assembled.jpg}{Зібрана плата.}
+\pairimg[0.64]{ngi_batch.jpg}{Виготовлена партія.}%
+              {ngi_stand.jpg}{У складі стенда разом із Raspberry Pi та Analog Discovery.}
+
+\vspace{4pt}
+{\footnotesize\color{muted}Виконано в рамках проєкту NGI Search, грантова угода № 101069364.}
+\vspace{3pt}
+\hrulecolor{line}{0.6pt}
+
+% ---------------------------------------------------------------
+%  ПРОЄКТ 03 — шилд для NUCLEO-H723
+% ---------------------------------------------------------------
+\clearpage
+\projecthead{Проєкт 03}%
+  {Плата розширення для STM32 NUCLEO-H723}%
+  {Віддалена лабораторія мікропроцесорної техніки $\cdot$ 2 шари, висока щільність $\cdot$ Erasmus+ DIGITRANS $\cdot$ 2024--2025}
+
+\chips{\chip{Altium Designer}\cs\chip{2 шари, висока щільність}\cs\chip{STM32H723}\cs%
+\chip{C для МК}}
+
+\notes{
+  \tz Розведено лише на двох шарах відповідно до виробничого бюджету проєкту.
+  \tz Посадкові місця й контур узгоджені з налагоджувальним стендом NUCLEO-H723.
+  \tz П'ять комплектів зібрано вручну (THT + SMD) та інтегровано в навчальні стенди
+      разом із Raspberry Pi і Analog Discovery.
+}
+
+\role{Бібліотека компонентів, робота зі схемами та розводка плати виконана під керівництвом провідного інженера.
+Складання та пайка всіх п'яти комплектів, тестові прошивки.}
+
+
+
+\pairimg[0.38]{shield_iso.jpg}{3D-вигляд в Altium Designer.}%
+              {shield_layout.jpg}{Розводка, обидва шари.}
+\pairimg[0.38]{shield_assembled.jpg}{Плата після SMD-монтажу.}%
+              {shield_nucleo.jpg}{Встановлено на NUCLEO-H723.}
+\bigimg[0.48]{shield_stand.jpg}{Стенд у робочому стані: Analog Discovery 2, шилд із Nucleo та Raspberry Pi на спільній панелі.}
+
+% ---------------------------------------------------------------
+%  ПРОЄКТ 04 — вимірювання температури термопарами
+% ---------------------------------------------------------------
+\clearpage
+\projecthead{Проєкт 04}%
+  {24-канальна система вимірювання температури термопарами}%
+  {Промислова вимірювальна плата $\cdot$ 4 шари $\cdot$ STM32F4 $\cdot$ виготовлено в Німеччині $\cdot$ 2025--2026}
+
+\chips{\chip{Altium Designer}\cs\chip{STM32}\cs\chip{Гальванічна розв'язка}\cs%
+\chip{Термопари J/K}}
+
+\notes{
+  \tz Не розробка з нуля - адаптація наявного промислового проєкту під нові вимоги
+      замовника.
+}
+
+\role{Перероблення схеми вимірювального тракту термопар, схема комутації каналів, вилучення невикористаних блоків проєкту. Зміни в бібліотеці компонентів, внесення змін в друковану плату.
+Виконано під час стажування в Hochschule Bonn-Rhein-Sieg (DAAD Eastern Partnership).}
+
+
+
+\bigimg[0.44]{tc_iso.jpg}{3D-вигляд в Altium Designer.}
+\bigimg[0.40]{tc_top.jpg}{Вигляд зверху: функціональні зони.}
+\bigimg[0.38]{tc_bottom.jpg}{Вид знизу.}
+
+% ---------------------------------------------------------------
+%  ПРОЄКТ 05 — драйвер електромагнітних клапанів
+% ---------------------------------------------------------------
+\clearpage
+\projecthead{Проєкт 05}%
+  {8-канальний драйвер електромагнітних клапанів}%
+  {Силова електроніка $\cdot$ 4 шари $\cdot$ STM32 $\cdot$ виготовлено, партія 5 шт $\cdot$ 2026}
+
+\chips{\chip{Altium Designer}\cs\chip{STM32}\cs\chip{Силова електроніка}}
+
+\notes{
+  \tz Частковий розрахунок схеми та розробка конструкції та плати під керівництвом провідного інженера.
+  \tz Компонування підпорядковане вимозі розділення силової та керуючої частин:
+      силові кола по периметру, мікроконтролер ізольовано в центрі.
+}
+
+\role{Частковий розрахунок номіналів схем, бібліотека компонентів, повна розводка друкованої плати. Робота під наглядом провідного інженера. Основа кваліфікаційної роботи бакалавра.}
+
+
+\bigimg[0.46]{valve_3d_iso.jpg}{3D-вигляд в Altium Designer.}
+\bigimg[0.38]{valve_3d_top.jpg}{Вигляд зверху: дзеркальна симетрія восьми силових каналів, керуюча частина в центрі.}
+\bigimg[0.46]{valve_board.jpg}{Виготовлена плата (партія 5 шт) до монтажу компонентів.}
+
+% ---------------------------------------------------------------
+%  ПРОЄКТ 06 — плата, сумісна з Arduino Duemilanove
+% ---------------------------------------------------------------
+\clearpage
+\projecthead{Проєкт 06}%
+  {Плата, сумісна з Arduino Duemilanove}%
+  {Навчальний проєкт $\cdot$ 2 шари $\cdot$ ATmega328 $\cdot$ THT + SMD}
+
+\chips{\chip{Altium Designer}\cs\chip{2 шари}\cs\chip{ATmega328}\cs%
+\chip{USB}\cs\chip{Живлення 5\,В}\cs\chip{Змішаний монтаж}}
+
+\notes{
+  \tz Навчальний проєкт: відтворення плати, сумісної з Arduino Duemilanove - 
+      ATmega328 у DIP-корпусі, USB-міст.
+  \tz Змішаний монтаж підібрано під ручну пайку: SMD на верхньому шарі,
+      мікроконтролер і роз'єми - THT.
+}
+
+\role{Створення бібліотеки компонентів та розводка плати, навчальний проєкт.}
+
+
+\pairimg[0.32]{ard_iso.jpg}{3D-вигляд в Altium Designer.}%
+              {ard_top.jpg}{Вигляд зверху.}
+\bigimg[0.32]{ard_layout.jpg}{Розводка, обидва шари.}
+
+% ---------------------------------------------------------------
+%  ПРОЄКТ 07 — драйвер затвора SiC MOSFET
+% ---------------------------------------------------------------
+\clearpage
+\projecthead{Проєкт 07}%
+  {Драйвер затвора SiC MOSFET для системи динамічного бездротового живлення}%
+  {Модуль для інвертора DWPT $\cdot$ 2 шари $\cdot$ 2026}
+
+\chips{\chip{Altium Designer}\cs\chip{SiC MOSFET}\cs\chip{Гальванічна розв'язка}\cs%
+\chip{ANSYS}}
+
+\notes{
+  \tz Схема не власна: за основу взято референсний драйвер Wolfspeed CGD15SG00D2
+      для SiC MOSFET 3-го покоління (C3M).
+  \tz Конструкцію плати перероблено під вимоги інвертора гібридної системи
+      динамічного бездротового передавання енергії - форму й посадкові розміри
+      адаптовано під модульну заміну.
+  \tz Драйвер виконано окремим модулем, що впаюється у плату інвертора: так вузол
+      можна замінити, не чіпаючи основну плату.
+  \tz Оптимізовано трасування вихідного каскаду для зменшення
+      паразитних ємності та індуктивності при швидкому перемиканні.
+}
+
+\role{Адаптація й повне перекомпонування друкованої плати, бібліотека компонентів,
+трасування вихідного каскаду, моделювання паразитних параметрів в ANSYS.}
+
+\bigimg[0.44]{sic_iso.jpg}{3D-вигляд в Altium Designer.}
+\pairimg[0.34]{sic_top.jpg}{Вид спереду.}%
+              {sic_bottom.jpg}{Нижній бік: цифровий ізолятор і кола затвора.}
+\bigimg[0.50]{sic_layout.jpg}{Розводка: контур плати підігнано під посадку в плату інвертора.}
+
+\hrulecolor{line}{0.6pt}
+
+\end{document}

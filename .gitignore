@@ -1,0 +1,7 @@
+﻿# Auxiliary LaTeX files
+portfolio/*.aux
+portfolio/*.log
+portfolio/*.out
+portfolio/*.synctex.gz
+portfolio/preview/
+portfolio/test_out.*
