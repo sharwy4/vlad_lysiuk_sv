@@ -70,6 +70,14 @@
 
   var num = function (i) { return String(i + 1).padStart(2, "0"); };
 
+  /* Скільки місця займає кадр у сітці — за цим браузер обирає файл із srcset.
+     Сітка: дві колонки з проміжком 16 px усередині смуги завширшки 1080 px,
+     нижче 700 px — одна колонка. */
+  var SIZES_CELL = "(max-width:700px) calc(100vw - 32px), " +
+                   "(max-width:1140px) calc((100vw - 80px) / 2), 500px";
+  var SIZES_WIDE = "(max-width:700px) calc(100vw - 32px), " +
+                   "(max-width:1140px) calc(100vw - 64px), 1016px";
+
   /* ---------------- Шапка ---------------- */
   function renderHero() {
     var h = CONTENT.hero;
@@ -193,21 +201,23 @@
       /* Список кадрів проєкту — щоб у повноекранному режимі гортати стрілками */
       var shots = p.images.map(function (im) {
         var mm = (typeof MEDIA !== "undefined" && MEDIA[im.src]) || null;
-        return { src: im.src, thumb: mm ? mm.t : im.src, cap: t(im.cap) };
+        return { src: im.src, thumb: (mm && mm.t) ? mm.t : im.src, cap: t(im.cap) };
       });
 
       var gallery = el("div", { class: "gallery" }, p.images.map(function (im, k) {
-        /* У сітці — полегшена копія; повний файл відкривається по кліку.
+        /* Браузеру даємо обидва файли: легку копію та оригінал. На звичайному
+           екрані він візьме копію, на щільному — оригінал без стиснення.
            Ширина й висота задані, щоб сторінка не стрибала під час завантаження. */
         var m = (typeof MEDIA !== "undefined" && MEDIA[im.src]) || null;
-        var btn = el("button", { class: "shot", type: "button", "aria-label": t(im.cap) }, [
-          el("img", {
-            src: m ? m.t : im.src,
-            width: m ? m.w : null,
-            height: m ? m.h : null,
-            alt: t(im.cap), loading: "lazy", decoding: "async"
-          })
-        ]);
+        var img = el("img", {
+          src: m && m.t ? m.t : im.src,
+          srcset: m && m.t ? (m.t + " " + m.tw + "w, " + im.src + " " + m.w + "w") : null,
+          sizes: im.wide ? SIZES_WIDE : SIZES_CELL,
+          width: m ? m.w : null,
+          height: m ? m.h : null,
+          alt: t(im.cap), loading: "lazy", decoding: "async"
+        });
+        var btn = el("button", { class: "shot", type: "button", "aria-label": t(im.cap) }, [img]);
         btn.addEventListener("click", function () { openViewer(shots, k); });
         return el("figure", { class: im.wide ? "wide" : "" }, [
           btn, el("figcaption", { text: t(im.cap) })

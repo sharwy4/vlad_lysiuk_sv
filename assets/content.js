@@ -142,8 +142,12 @@ experience: [
       { uk: "Доопрацювання схеми та бібліотек існуючого проєкту плати 24-канальної системи вимірювання; наступного року — самостійна розводка плати в Altium Designer.",
         en: "Reworking the schematic and libraries of the existing 24-channel measurement board project; the following year — independent routing of the board in Altium Designer." }
     ],
-    links: [ { label: { uk: "Тези «Юність науки – 2025», с. 1012", en: "Proceedings “Youth Science – 2025”, p. 1012" },
-               href: "http://ir.stu.cn.ua/handle/123456789/32545" } ]
+    links: [
+      { label: { uk: "Тези «Юність науки – 2025», с. 1012", en: "Proceedings “Youth Science – 2025”, p. 1012" },
+        href: "http://ir.stu.cn.ua/handle/123456789/32545" },
+      { label: { uk: "Профіль виконавця", en: "Performer profile" },
+        href: "https://hub.stu.cn.ua/project-performer/lysyuk-vladyslav-pavlovych/" }
+    ]
   },
   {
     date: { uk: "11.2025 – 12.2025", en: "Nov 2025 – Dec 2025" },
@@ -197,7 +201,9 @@ experience: [
       { label: { uk: "Тези «Юність науки – 2026»", en: "Proceedings “Youth Science – 2026”" },
         href: "https://ir.stu.cn.ua/handle/123456789/35067" },
       { label: { uk: "КЗЯТПС-25, том 3", en: "KZYATPS-25, volume 3" },
-        href: "https://drive.google.com/file/d/1juZTLLvSuyn-di0HTmq1ew8Ju6fRK2ki/view" }
+        href: "https://drive.google.com/file/d/1juZTLLvSuyn-di0HTmq1ew8Ju6fRK2ki/view" },
+      { label: { uk: "Феромагнітне екранування, ResearchGate", en: "Ferromagnetic shielding, ResearchGate" },
+        href: "https://www.researchgate.net/publication/392126449_Analysis_of_ferromagnetic_shielding_patterns_in_wireless_power_transfer_applications_using_the_PyAEDT_library_in_Ansys" }
     ]
   }
 ],
@@ -442,17 +448,18 @@ projects: [
 publications: [
   { year: "2026",
     text: { uk: "Лисюк В. П., Хоменко М. А. «Багатоканальний пристрій керування електромагнітними клапанами» — Юність науки – 2026, Чернігів, 2026.",
-            en: "V. P. Lysiuk, M. A. Khomenko. “Multichannel solenoid valve control device” — Youth Science – 2026, Chernihiv, 2026." } },
+            en: "V. P. Lysiuk, M. A. Khomenko. “Multichannel solenoid valve control device” — Youth Science – 2026, Chernihiv, 2026." },
+    href: "https://ir.stu.cn.ua/handle/123456789/35067" },
   { year: "2026",
     text: { uk: "V. Lysiuk, B. Pakhaliuk, A. Strohii, L. Yarmolenko. “Development of an optimized PCB topology for a SiC gate driver in a hybrid dynamic wireless power transfer system”, Chernihiv Polytechnic National University, Chernihiv, 2026, p. 19.",
-            en: "V. Lysiuk, B. Pakhaliuk, A. Strohii, L. Yarmolenko. “Development of an optimized PCB topology for a SiC gate driver in a hybrid dynamic wireless power transfer system”, Chernihiv Polytechnic National University, Chernihiv, 2026, p. 19." } },
+            en: "V. Lysiuk, B. Pakhaliuk, A. Strohii, L. Yarmolenko. “Development of an optimized PCB topology for a SiC gate driver in a hybrid dynamic wireless power transfer system”, Chernihiv Polytechnic National University, Chernihiv, 2026, p. 19." },
+    href: "https://drive.google.com/file/d/1juZTLLvSuyn-di0HTmq1ew8Ju6fRK2ki/view" },
   { year: "2025",
     text: { uk: "L. A. Yarmolenko, V. P. Lysiuk, B. P. Pakhaliuk. “Experimental determination of the growth rate of a copper electrolytic coating for a 3D printed air capacitor”, The latest technologies of modern society (NTSS-2025), Chernihiv, 2025.",
             en: "L. A. Yarmolenko, V. P. Lysiuk, B. P. Pakhaliuk. “Experimental determination of the growth rate of a copper electrolytic coating for a 3D printed air capacitor”, The latest technologies of modern society (NTSS-2025), Chernihiv, 2025." } },
   { year: "2025",
     text: { uk: "B. Pakhaliuk, V. Lysiuk, I. Burmaka, O. Matiushkin, R. Strzelecki. “Simulation analysis of wireless power transfer solutions with hybrid inductive and capacitive coupling”, XX International Conference MODS 2025.",
-            en: "B. Pakhaliuk, V. Lysiuk, I. Burmaka, O. Matiushkin, R. Strzelecki. “Simulation analysis of wireless power transfer solutions with hybrid inductive and capacitive coupling”, XX International Conference MODS 2025." },
-    href: "" },
+            en: "B. Pakhaliuk, V. Lysiuk, I. Burmaka, O. Matiushkin, R. Strzelecki. “Simulation analysis of wireless power transfer solutions with hybrid inductive and capacitive coupling”, XX International Conference MODS 2025." } },
   { year: "2025",
     text: { uk: "B. Pakhaliuk, V. Lysiuk, O. Husev. “Analysis of ferromagnetic shielding patterns in wireless power transfer applications using the PyAEDT library in Ansys”, Комплексне забезпечення якості технологічних процесів та систем, травень 2025.",
             en: "B. Pakhaliuk, V. Lysiuk, O. Husev. “Analysis of ferromagnetic shielding patterns in wireless power transfer applications using the PyAEDT library in Ansys”, Comprehensive Quality Assurance of Technological Processes and Systems, May 2025." },
