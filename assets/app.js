@@ -195,7 +195,6 @@
   /* ---------------- Плати ---------------- */
   function boards() {
     var wrapEl = el("div", {}, []);
-    wrapEl.appendChild(el("p", { class: "lede measure", text: t(CONTENT.ui.boardsIntro), style: "margin-bottom:32px" }));
 
     CONTENT.projects.forEach(function (p, i) {
       /* Список кадрів проєкту — щоб у повноекранному режимі гортати стрілками */
@@ -357,16 +356,13 @@
 
   /* ---------------- Підвал ---------------- */
   function footer() {
-    var u = CONTENT.ui, h = CONTENT.hero;
+    var u = CONTENT.ui;
     return el("footer", { class: "foot" }, [
       el("div", { class: "wrap" }, [
         el("div", { class: "foot__in" }, [
-          el("p", { text: t(u.footerNote) }),
           el("div", { class: "foot__links" }, [
-            el("a", { href: "mailto:" + h.email, text: h.email }),
             el("a", { href: t(u.cvFile), target: "_blank", rel: "noopener", text: t(u.cvButton) }),
-            el("a", { href: "portfolio/portfolio.pdf", target: "_blank", rel: "noopener", text: t(u.boardsPdf) }),
-            el("a", { href: "https://github.com/sharwy4/vlad_lysiuk_sv", target: "_blank", rel: "noopener", text: "GitHub" })
+            el("a", { href: "portfolio/portfolio.pdf", target: "_blank", rel: "noopener", text: t(u.boardsPdf) })
           ])
         ])
       ])

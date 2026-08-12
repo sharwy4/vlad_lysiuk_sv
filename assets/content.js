@@ -14,7 +14,7 @@ ui: {
   navExp:      { uk: "Досвід",       en: "Experience" },
   navEdu:      { uk: "Освіта",       en: "Education" },
   navSkills:   { uk: "Навички",      en: "Skills" },
-  navBoards:   { uk: "Плати",        en: "Boards" },
+  navBoards:   { uk: "Виконані проекти", en: "Completed projects" },
   navPubs:     { uk: "Публікації",   en: "Publications" },
   navMore:     { uk: "Гранти",       en: "Grants" },
   cvButton:    { uk: "CV у PDF",     en: "CV as PDF" },
@@ -39,15 +39,11 @@ ui: {
   sectionExp:  { uk: "Досвід",         en: "Experience" },
   sectionEdu:  { uk: "Освіта",         en: "Education" },
   sectionSkills:{uk: "Технічні навички", en: "Technical skills" },
-  sectionBoards:{uk: "Плати",          en: "Boards" },
+  sectionBoards:{uk: "Виконані проекти", en: "Completed projects" },
   sectionPubs: { uk: "Публікації",     en: "Publications" },
   sectionGrants:{uk: "Гранти та міжнародні програми", en: "Grants and international programmes" },
   sectionAwards:{uk: "Відзнаки",       en: "Awards" },
-  sectionLangs:{ uk: "Мови",           en: "Languages" },
-  boardsIntro: { uk: "Сім плат у хронологічному порядку — від навчальної двошарової до чотиришарової промислової. Клік по зображенню відкриває його на весь екран.",
-                 en: "Seven boards in chronological order — from a two-layer study project to a four-layer industrial one. Click an image to open it full screen." },
-  footerNote:  { uk: "Сторінку зверстано вручну, без конструкторів сайтів. Вихідний код — на GitHub.",
-                 en: "This page is hand-written, no site builders. Source code is on GitHub." }
+  sectionLangs:{ uk: "Мови",           en: "Languages" }
 },
 
 /* ---------- Шапка ---------- */

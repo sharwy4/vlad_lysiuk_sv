@@ -429,9 +429,9 @@ a:hover{color:var(--copper)}
 /* =================================================================
    ПІДВАЛ
    ================================================================= */
-.foot{border-top:1px solid var(--ink); padding:var(--sp-6) 0 var(--sp-8); margin-top:var(--sp-7)}
+/* У підвалі лишились тільки два посилання на PDF, тому відступи менші */
+.foot{border-top:1px solid var(--ink); padding:var(--sp-5) 0 var(--sp-6); margin-top:var(--sp-7)}
 .foot__in{display:flex; flex-wrap:wrap; gap:var(--sp-5); justify-content:space-between; align-items:flex-start}
-.foot p{margin:0; font-size:13px; color:var(--ink-3); max-width:46ch}
 .foot__links{display:flex; flex-wrap:wrap; gap:var(--sp-4)}
 .foot__links a{font-family:var(--mono); font-size:12px; text-decoration:none; border-bottom:1px solid var(--rule)}
 .foot__links a:hover{border-color:var(--copper)}
