@@ -1,0 +1,352 @@
+% =====================================================================
+%  PCB DESIGN ENGINEER PORTFOLIO
+%  Vladyslav Lysiuk
+%
+%  Англійська версія portfolio.tex — дослівний переклад, без нового змісту.
+%  Структура, макроси, зображення й висоти ілюстрацій ті самі; змінено лише
+%  мову тексту та \setdefaultlanguage.
+%
+%  Як зібрати:  xelatex portfolio_EN.tex   (двічі — заради змісту/полів)
+%
+%  Рушій ОБОВ'ЯЗКОВО XeLaTeX або LuaLaTeX. pdflatex НЕ підійде.
+% =====================================================================
+
+\documentclass[11pt,a4paper]{article}
+
+% ---------- Поля сторінки (15 мм з усіх боків) ----------
+\usepackage[a4paper,margin=15mm,bottom=18mm,footskip=8mm]{geometry}
+
+% ---------- Шрифти та мова ----------
+\usepackage{fontspec}
+\setmainfont{DejaVu Sans Condensed}
+\newfontfamily\headingfont{DejaVu Sans Condensed}
+
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+
+% ---------- Графіка, кольори, допоміжні пакети ----------
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}          % компактні списки
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{ragged2e}
+
+% ---------- ПАЛІТРА (та сама, що й в українській версії) ----------
+\definecolor{accent}{HTML}{0F5C4A}   % акцент — темно-зелений
+\definecolor{ink}{HTML}{14181D}      % основний текст
+\definecolor{muted}{HTML}{5D6772}    % сірий для метаданих і підписів
+\definecolor{chipbg}{HTML}{EEF3F1}   % заливка «чипів»
+\definecolor{line}{HTML}{D7DDE3}     % тонкі лінії та рамки
+
+\color{ink}
+
+% ---------- Колонтитул: номер сторінки внизу праворуч ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[R]{\footnotesize\color{muted}\thepage}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+\widowpenalty=10000
+\clubpenalty=10000
+
+% =====================================================================
+%  ВЛАСНІ КОМАНДИ
+% =====================================================================
+
+\newtcbox{\chip}{on line, boxsep=0pt, left=5pt, right=5pt, top=3pt, bottom=3pt,
+  colframe=line, colback=chipbg, boxrule=0.4pt, arc=3pt,
+  fontupper=\footnotesize\color{accent!85!black}}
+
+% Шапка складається з трьох окремих абзаців у спільній групі: інакше заборона
+% переносів не діє (TeX читає \hyphenpenalty аж наприкінці абзацу).
+\newcommand{\projecthead}[3]{%
+  \begingroup
+  \setlength{\parskip}{0pt}%
+  \hyphenpenalty=10000\exhyphenpenalty=10000\relax
+  \raggedright
+  {\footnotesize\color{muted}\addfontfeature{LetterSpace=25}\MakeUppercase{#1}\par}
+  \vspace{3pt}
+  {\LARGE\bfseries\color{ink}#2\par}
+  \vspace{4pt}
+  {\footnotesize\color{muted}#3\par}
+  \endgroup
+  \vspace{4pt}
+  \hrulecolor{line}{0.6pt}
+  \vspace{8pt}
+}
+
+\newcommand{\chips}[1]{\par\noindent{\raggedright #1\par}\vspace{2pt}}
+\newcommand{\cs}{\hskip3pt\penalty0\hskip0pt\relax}
+\newcommand{\hrulecolor}[2]{\par\noindent{\color{#1}\rule{\linewidth}{#2}}\par}
+
+\newtcolorbox{rolebox}{enhanced, breakable=false, colback=white,
+  boxrule=0pt, frame hidden, sharp corners,
+  borderline west={2pt}{0pt}{accent},
+  left=10pt, right=0pt, top=5pt, bottom=5pt, boxsep=0pt}
+
+\newcommand{\role}[1]{%
+  \par\vspace{6pt}
+  \begin{rolebox}
+    \small\justifying{\bfseries\color{accent}My role.} #1
+  \end{rolebox}
+  \par\vspace{4pt}
+}
+
+\newcommand{\tz}{\item}
+\newcommand{\notes}[1]{%
+  \par\vspace{2pt}
+  {\footnotesize\color{muted}%
+   \begin{itemize}[leftmargin=12pt, itemsep=1pt, topsep=2pt, parsep=0pt,
+     label=\textcolor{muted}{\rule{3pt}{3pt}}]
+     #1
+   \end{itemize}}%
+  \par\vspace{2pt}
+}
+
+\newenvironment{points}
+  {\begin{itemize}[leftmargin=14pt, itemsep=3pt, topsep=4pt, parsep=0pt,
+     label=\textcolor{accent}{\small$\bullet$}]\small\justifying}
+  {\end{itemize}}
+
+\newcommand{\bigimg}[3][0.42]{%
+  \par\vspace{6pt}
+  \noindent
+  \begin{minipage}{\linewidth}
+    \centering
+    \setlength{\fboxrule}{0.4pt}\setlength{\fboxsep}{2pt}%
+    \fcolorbox{line}{white}{\includegraphics[width=\dimexpr\linewidth-6pt\relax,
+                                            height=#1\textheight,
+                                            keepaspectratio]{#2}}\\[3pt]
+    {\footnotesize\color{muted}#3}
+  \end{minipage}
+  \par\vspace{8pt}
+}
+
+\newcommand{\pairimg}[5][0.30]{%
+  \par\vspace{6pt}
+  \noindent
+  \begin{minipage}{\linewidth}
+    \setlength{\fboxrule}{0.4pt}\setlength{\fboxsep}{2pt}%
+    \begin{minipage}[t]{0.485\linewidth}
+      \centering
+      \fcolorbox{line}{white}{\includegraphics[width=\dimexpr\linewidth-6pt\relax,
+                                              height=#1\textheight,
+                                              keepaspectratio]{#2}}\\[3pt]
+      {\footnotesize\color{muted}#3}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.485\linewidth}
+      \centering
+      \fcolorbox{line}{white}{\includegraphics[width=\dimexpr\linewidth-6pt\relax,
+                                              height=#1\textheight,
+                                              keepaspectratio]{#4}}\\[3pt]
+      {\footnotesize\color{muted}#5}
+    \end{minipage}
+  \end{minipage}
+  \par\vspace{8pt}
+}
+
+\usepackage{calc}
+
+\graphicspath{{images/}}
+
+% =====================================================================
+%  ДОКУМЕНТ
+% =====================================================================
+\begin{document}
+
+% Документ починається одразу з першого проєкту — без шапки з контактами
+% та без вступного абзацу. Проєкти впорядковані хронологічно.
+
+% ---------------------------------------------------------------
+%  PROJECT 01 — ATtiny13 thermometer (course project)
+% ---------------------------------------------------------------
+\projecthead{Project 01}%
+  {Thermometer on ATtiny13}%
+  {Course project in “Modern CAD for electronic equipment” $\cdot$ 2 layers $\cdot$ 2023}
+
+\chips{\chip{Altium Designer}\cs\chip{2 layers}\cs\chip{ATtiny13}\cs\chip{First board}}
+
+\notes{
+  \tz The first board I did on my own in Altium Designer.
+  \tz Purpose - a room thermometer: LM35 sensor, 74HC595 shift registers,
+      three 7-segment displays.
+}
+
+\role{Component library, schematic, board routing, full set of design documentation.}
+
+\bigimg[0.28]{temp_iso.jpg}{3D view in Altium Designer.}
+\pairimg[0.30]{temp_3d_top.jpg}{Top view.}%
+              {temp_layout.jpg}{Routing, two layers.}
+
+% ---------------------------------------------------------------
+%  PROJECT 02 — remote power electronics laboratory board
+% ---------------------------------------------------------------
+\clearpage
+\projecthead{Project 02}%
+  {Remote power electronics laboratory board}%
+  {Horizon Europe $\cdot$ NGI Search, grant No. 101069364 $\cdot$ 2 layers $\cdot$ batch of 5 $\cdot$ 2023--2024}
+
+\chips{\chip{Altium Designer}\cs\chip{Buck converter}\cs\chip{Horizon Europe}}
+
+\notes{
+  \tz The first production project I took part in - the board went the whole way
+      from schematic to fabrication and assembly.
+}
+
+\role{Component library and schematics in Altium Designer, placement and routing of
+the board, full assembly and soldering of all five boards.}
+
+
+\bigimg[0.44]{buck_3d.jpg}{3D view in Altium Designer.}
+\bigimg[0.40]{buck_layout.jpg}{Routing.}
+\bigimg[0.40]{ngi_assembled.jpg}{Assembled board.}
+\pairimg[0.64]{ngi_batch.jpg}{Fabricated batch.}%
+              {ngi_stand.jpg}{Inside the bench together with Raspberry Pi and Analog Discovery.}
+
+\vspace{4pt}
+{\footnotesize\color{muted}Carried out within the NGI Search project, grant agreement No. 101069364.}
+\vspace{3pt}
+\hrulecolor{line}{0.6pt}
+
+% ---------------------------------------------------------------
+%  PROJECT 03 — shield for NUCLEO-H723
+% ---------------------------------------------------------------
+\clearpage
+\projecthead{Project 03}%
+  {Expansion board for STM32 NUCLEO-H723}%
+  {Remote microprocessor technology laboratory $\cdot$ 2 layers, high density $\cdot$ Erasmus+ DIGITRANS $\cdot$ 2024--2025}
+
+\chips{\chip{Altium Designer}\cs\chip{2 layers, high density}\cs\chip{STM32H723}\cs%
+\chip{C for MCU}}
+
+\notes{
+  \tz Routed on two layers only, in line with the project's manufacturing budget.
+  \tz Footprints and board outline matched to the NUCLEO-H723 development bench.
+  \tz Five sets assembled by hand (THT + SMD) and integrated into teaching benches
+      together with Raspberry Pi and Analog Discovery.
+}
+
+\role{Component library, schematic work and board routing done under the guidance of a
+lead engineer. Assembly and soldering of all five sets, test firmware.}
+
+
+
+\pairimg[0.38]{shield_iso.jpg}{3D view in Altium Designer.}%
+              {shield_layout.jpg}{Routing, both layers.}
+\pairimg[0.38]{shield_assembled.jpg}{Board after SMD assembly.}%
+              {shield_nucleo.jpg}{Mounted on NUCLEO-H723.}
+\bigimg[0.48]{shield_stand.jpg}{The bench in operation: Analog Discovery 2, the shield with Nucleo and a Raspberry Pi on a shared panel.}
+
+% ---------------------------------------------------------------
+%  PROJECT 04 — thermocouple temperature measurement
+% ---------------------------------------------------------------
+\clearpage
+\projecthead{Project 04}%
+  {24-channel thermocouple temperature measurement system}%
+  {Industrial measurement board $\cdot$ 4 layers $\cdot$ STM32F4 $\cdot$ fabricated in Germany $\cdot$ 2025--2026}
+
+\chips{\chip{Altium Designer}\cs\chip{STM32}\cs\chip{Galvanic isolation}\cs%
+\chip{J/K thermocouples}}
+
+\notes{
+  \tz Not a from-scratch development - adaptation of an existing industrial project
+      to the customer's new requirements.
+}
+
+\role{Rework of the thermocouple measurement path schematic, the channel switching circuit, removal of unused blocks of the project. Changes to the component library and to the printed circuit board.
+Done during the internship at Hochschule Bonn-Rhein-Sieg (DAAD Eastern Partnership).}
+
+
+
+\bigimg[0.44]{tc_iso.jpg}{3D view in Altium Designer.}
+\bigimg[0.40]{tc_top.jpg}{Top view: functional zones.}
+\bigimg[0.38]{tc_bottom.jpg}{Bottom view.}
+
+% ---------------------------------------------------------------
+%  PROJECT 05 — solenoid valve driver
+% ---------------------------------------------------------------
+\clearpage
+\projecthead{Project 05}%
+  {8-channel solenoid valve driver}%
+  {Power electronics $\cdot$ 4 layers $\cdot$ STM32 $\cdot$ fabricated, batch of 5 $\cdot$ 2026}
+
+\chips{\chip{Altium Designer}\cs\chip{STM32}\cs\chip{Power electronics}}
+
+\notes{
+  \tz Partial circuit calculation and development of the mechanical design and the board
+      under the guidance of a lead engineer.
+  \tz The placement follows the requirement to separate the power and control sections:
+      power circuits around the perimeter, the microcontroller isolated in the centre.
+}
+
+\role{Partial calculation of component values, component library, full routing of the printed circuit board. Work under a lead engineer's supervision. The basis of the bachelor's qualification work.}
+
+
+\bigimg[0.46]{valve_3d_iso.jpg}{3D view in Altium Designer.}
+\bigimg[0.38]{valve_3d_top.jpg}{Top view: mirror symmetry of the eight power channels, the control section in the centre.}
+\bigimg[0.46]{valve_board.jpg}{The fabricated board (batch of 5) before component assembly.}
+
+% ---------------------------------------------------------------
+%  PROJECT 06 — Arduino Duemilanove compatible board
+% ---------------------------------------------------------------
+\clearpage
+\projecthead{Project 06}%
+  {Arduino Duemilanove compatible board}%
+  {Study project $\cdot$ 2 layers $\cdot$ ATmega328 $\cdot$ THT + SMD}
+
+\chips{\chip{Altium Designer}\cs\chip{2 layers}\cs\chip{ATmega328}\cs%
+\chip{USB}\cs\chip{5\,V supply}\cs\chip{Mixed assembly}}
+
+\notes{
+  \tz Study project: recreating a board compatible with Arduino Duemilanove -
+      ATmega328 in a DIP package, USB bridge.
+  \tz Mixed assembly chosen for hand soldering: SMD on the top layer,
+      the microcontroller and connectors - THT.
+}
+
+\role{Building the component library and routing the board, a study project.}
+
+
+\pairimg[0.32]{ard_iso.jpg}{3D view in Altium Designer.}%
+              {ard_top.jpg}{Top view.}
+\bigimg[0.32]{ard_layout.jpg}{Routing, both layers.}
+
+% ---------------------------------------------------------------
+%  PROJECT 07 — SiC MOSFET gate driver
+% ---------------------------------------------------------------
+\clearpage
+\projecthead{Project 07}%
+  {SiC MOSFET gate driver for a dynamic wireless power transfer system}%
+  {Module for a DWPT inverter $\cdot$ 2 layers $\cdot$ 2026}
+
+\chips{\chip{Altium Designer}\cs\chip{SiC MOSFET}\cs\chip{Galvanic isolation}\cs%
+\chip{ANSYS}}
+
+\notes{
+  \tz The schematic is not my own: the Wolfspeed CGD15SG00D2 reference driver
+      for 3rd generation SiC MOSFETs (C3M) was taken as a basis.
+  \tz The board design was reworked for the requirements of the inverter of a hybrid
+      dynamic wireless power transfer system - the shape and mounting dimensions
+      were adapted for modular replacement.
+  \tz The driver is built as a separate module soldered into the inverter board: this way
+      the unit can be replaced without touching the main board.
+  \tz The output stage routing was optimised to reduce parasitic capacitance
+      and inductance during fast switching.
+}
+
+\role{Adaptation and complete re-layout of the printed circuit board, component library,
+routing of the output stage, simulation of parasitic parameters in ANSYS.}
+
+\bigimg[0.44]{sic_iso.jpg}{3D view in Altium Designer.}
+\pairimg[0.34]{sic_top.jpg}{Front view.}%
+              {sic_bottom.jpg}{Bottom side: digital isolator and gate circuits.}
+\bigimg[0.50]{sic_layout.jpg}{Routing: the board outline is fitted to its seat in the inverter board.}
+
+\hrulecolor{line}{0.6pt}
+
+\end{document}

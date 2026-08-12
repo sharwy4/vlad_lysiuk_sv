@@ -362,7 +362,7 @@
         el("div", { class: "foot__in" }, [
           el("div", { class: "foot__links" }, [
             el("a", { href: t(u.cvFile), target: "_blank", rel: "noopener", text: t(u.cvButton) }),
-            el("a", { href: "portfolio/portfolio.pdf", target: "_blank", rel: "noopener", text: t(u.boardsPdf) })
+            el("a", { href: t(u.boardsFile), target: "_blank", rel: "noopener", text: t(u.boardsPdf) })
           ])
         ])
       ])

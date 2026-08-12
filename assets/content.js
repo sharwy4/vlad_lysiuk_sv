@@ -21,6 +21,7 @@ ui: {
   /* Кожна мова веде на свій файл резюме */
   cvFile:      { uk: "cv/Lysiuk_CV.pdf", en: "cv/Lysiuk_CV_EN.pdf" },
   boardsPdf:   { uk: "Портфоліо плат у PDF", en: "Board portfolio as PDF" },
+  boardsFile:  { uk: "portfolio/portfolio.pdf", en: "portfolio/portfolio_EN.pdf" },
   copy:        { uk: "Копіювати",    en: "Copy" },
   copied:      { uk: "Скопійовано",  en: "Copied" },
   role:        { uk: "Моя роль",     en: "My role" },

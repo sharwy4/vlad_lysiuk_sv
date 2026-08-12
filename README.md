@@ -15,10 +15,15 @@ assets/
   app.js                рендер, перемикання мови й теми, повноекранний перегляд
   style.css             стилі й кольори
   photo.png             фото для шапки
-cv/Lysiuk_CV.pdf        резюме для завантаження
+cv/
+  Lysiuk_CV.pdf         резюме українською
+  Lysiuk_CV_EN.pdf      те саме англійською
+  Lysiuk_CV_EN.tex      вихідник англійської версії (xelatex)
 portfolio/
-  portfolio.tex         вихідник PDF-портфоліо (LaTeX)
-  portfolio.pdf         зібране портфоліо плат
+  portfolio.tex         вихідник портфоліо плат, українською
+  portfolio_EN.tex      те саме англійською (дослівний переклад)
+  portfolio.pdf
+  portfolio_EN.pdf
   images/               оригінали зображень
   images/thumbs/        полегшені копії для галереї (створюються скриптом)
 tools/make_thumbs.py    підготовка мініатюр
@@ -33,6 +38,14 @@ tools/make_thumbs.py    підготовка мініатюр
 ```
 
 Змінили — зберегли — `git push`. Сайт оновиться сам за 1–2 хвилини.
+
+Обидва PDF теж прив'язані до мови: українська версія сайту дає українські файли,
+англійська — англійські. Якщо правите текст у `portfolio/portfolio.tex`, ту саму
+правку треба внести і в `portfolio/portfolio_EN.tex`, а тоді перезібрати:
+
+```bash
+cd portfolio && ./build.bat
+```
 
 ## Як додати зображення
 
