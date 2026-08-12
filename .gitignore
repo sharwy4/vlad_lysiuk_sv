@@ -5,3 +5,6 @@ portfolio/*.out
 portfolio/*.synctex.gz
 portfolio/preview/
 portfolio/test_out.*
+
+# Локальні налаштування редактора
+.claude/
