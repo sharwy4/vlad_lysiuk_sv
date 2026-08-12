@@ -285,7 +285,7 @@
       return b;
     }));
 
-    var cv = el("a", { class: "btn", href: "cv/Lysiuk_CV.pdf", target: "_blank", rel: "noopener" }, [
+    var cv = el("a", { class: "btn", href: t(u.cvFile), target: "_blank", rel: "noopener" }, [
       iconDownload(), document.createTextNode(t(u.cvButton))
     ]);
 
@@ -354,7 +354,7 @@
           el("p", { text: t(u.footerNote) }),
           el("div", { class: "foot__links" }, [
             el("a", { href: "mailto:" + h.email, text: h.email }),
-            el("a", { href: "cv/Lysiuk_CV.pdf", target: "_blank", rel: "noopener", text: t(u.cvButton) }),
+            el("a", { href: t(u.cvFile), target: "_blank", rel: "noopener", text: t(u.cvButton) }),
             el("a", { href: "portfolio/portfolio.pdf", target: "_blank", rel: "noopener", text: t(u.boardsPdf) }),
             el("a", { href: "https://github.com/sharwy4/vlad_lysiuk_sv", target: "_blank", rel: "noopener", text: "GitHub" })
           ])

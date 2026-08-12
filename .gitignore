@@ -6,5 +6,23 @@ portfolio/*.synctex.gz
 portfolio/preview/
 portfolio/test_out.*
 
+# Робочий дубль вихідника портфоліо
+portfolio/portfolio2.tex
+
+# Проміжні файли збірки CV
+cv/*.aux
+cv/*.log
+cv/*.out
+cv/*.synctex.gz
+
+# Теки з оригіналами проєктів — усі потрібні зображення вже в portfolio/images/
+Arduino Duemilanove/
+Kyrs_temperature/
+Nolden_IO/
+SiC_driver/
+STM_expansion_board/
+Solenoid/
+Step_down_converter/
+
 # Локальні налаштування редактора
 .claude/

@@ -18,6 +18,8 @@ ui: {
   navPubs:     { uk: "Публікації",   en: "Publications" },
   navMore:     { uk: "Гранти",       en: "Grants" },
   cvButton:    { uk: "CV у PDF",     en: "CV as PDF" },
+  /* Кожна мова веде на свій файл резюме */
+  cvFile:      { uk: "cv/Lysiuk_CV.pdf", en: "cv/Lysiuk_CV_EN.pdf" },
   boardsPdf:   { uk: "Портфоліо плат у PDF", en: "Board portfolio as PDF" },
   copy:        { uk: "Копіювати",    en: "Copy" },
   copied:      { uk: "Скопійовано",  en: "Copied" },

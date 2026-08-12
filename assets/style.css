@@ -14,12 +14,12 @@
   --surface:    #FFFFFF;
   --ink:        #0F1512;
   --ink-2:      #59635E;
-  --ink-3:      #8A938E;
+  --ink-3:      #656E69;   /* темніше за початковий #8A938E — 4,9:1 на папері */
   --rule:       #E0E4DE;
   --rule-soft:  #EDEFEA;
   --mask:       #0E5C49;   /* паяльна маска — структура, посилання */
   --mask-soft:  #E8F0EC;
-  --copper:     #A9642B;   /* мідь — акцент, доріжки, контактні площадки */
+  --copper:     #9A5A25;   /* мідь — акцент, доріжки, контактні площадки (5,1:1 на папері) */
   --copper-soft:#F4E9DE;
 
   --shadow-sm: 0 1px 2px rgba(15,21,18,.04);
@@ -43,7 +43,7 @@
     --surface:    #121816;
     --ink:        #E9EEEB;
     --ink-2:      #97A29C;
-    --ink-3:      #6D7873;
+    --ink-3:      #78837E;   /* світліше за початковий #6D7873 — 4,9:1 на темному тлі */
     --rule:       #222B27;
     --rule-soft:  #1A211E;
     --mask:       #45AE91;
@@ -55,16 +55,16 @@
   }
 }
 :root[data-theme="dark"]{
-  --paper:#0B100E; --surface:#121816; --ink:#E9EEEB; --ink-2:#97A29C; --ink-3:#6D7873;
+  --paper:#0B100E; --surface:#121816; --ink:#E9EEEB; --ink-2:#97A29C; --ink-3:#78837E;
   --rule:#222B27; --rule-soft:#1A211E; --mask:#45AE91; --mask-soft:#12241E;
   --copper:#CE8B4E; --copper-soft:#241A11;
   --shadow-sm:0 1px 2px rgba(0,0,0,.4);
   --shadow-md:0 2px 4px rgba(0,0,0,.35), 0 12px 28px rgba(0,0,0,.4);
 }
 :root[data-theme="light"]{
-  --paper:#F7F7F4; --surface:#FFFFFF; --ink:#0F1512; --ink-2:#59635E; --ink-3:#8A938E;
+  --paper:#F7F7F4; --surface:#FFFFFF; --ink:#0F1512; --ink-2:#59635E; --ink-3:#656E69;
   --rule:#E0E4DE; --rule-soft:#EDEFEA; --mask:#0E5C49; --mask-soft:#E8F0EC;
-  --copper:#A9642B; --copper-soft:#F4E9DE;
+  --copper:#9A5A25; --copper-soft:#F4E9DE;
 }
 
 *{box-sizing:border-box}
@@ -135,16 +135,20 @@ a:hover{color:var(--copper)}
 .nav a[aria-current="true"]::before{content:"["}
 .nav a[aria-current="true"]::after{content:"]"}
 
+/* Усі контроли панелі однієї висоти — рядок читається як одна лінійка приладів */
+:root{ --control-h: 30px }
+
 .tools{display:flex; align-items:center; gap:var(--sp-2); flex:none}
 
 /* Перемикач мови — сегментний, як маркування шарів */
 .lang{
-  display:inline-flex; border:1px solid var(--rule); border-radius:7px;
+  display:inline-flex; align-items:stretch; height:var(--control-h);
+  border:1px solid var(--rule); border-radius:7px;
   overflow:hidden; background:var(--surface);
 }
 .lang button{
   font-family:var(--mono); font-size:11px; font-weight:500; letter-spacing:.08em;
-  padding:5px 9px; border:0; background:transparent; color:var(--ink-2);
+  padding:0 10px; border:0; background:transparent; color:var(--ink-2);
   cursor:pointer; transition:background .18s var(--ease), color .18s var(--ease);
 }
 .lang button:hover{color:var(--ink); background:var(--rule-soft)}
@@ -152,8 +156,9 @@ a:hover{color:var(--copper)}
 
 .btn{
   display:inline-flex; align-items:center; gap:7px; white-space:nowrap;
+  height:var(--control-h);
   font-family:var(--mono); font-size:11.5px; font-weight:500; letter-spacing:.04em;
-  padding:7px 12px; border-radius:7px; text-decoration:none;
+  padding:0 12px; border-radius:7px; text-decoration:none;
   border:1px solid var(--ink); background:var(--ink); color:var(--paper);
   transition:transform .18s var(--ease), opacity .18s var(--ease);
 }
@@ -163,32 +168,51 @@ a:hover{color:var(--copper)}
 .btn--ghost:hover{color:var(--ink); border-color:var(--copper); background:var(--copper-soft)}
 .btn svg{width:13px; height:13px; flex:none}
 
-/* Перемикач теми */
+/* Перемикач теми — той самий корпус, що й у мови */
 .themebtn{
-  display:grid; place-items:center; width:30px; height:28px; flex:none;
+  display:grid; place-items:center; flex:none;
+  width:var(--control-h); height:var(--control-h);
   border:1px solid var(--rule); border-radius:7px; background:var(--surface);
   color:var(--ink-2); cursor:pointer;
-  transition:color .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
+  transition:color .18s var(--ease), background .18s var(--ease);
 }
-.themebtn:hover{color:var(--copper); border-color:var(--copper); background:var(--copper-soft)}
+.themebtn:hover{color:var(--ink); background:var(--rule-soft)}
 .themebtn svg{width:15px; height:15px}
 
-/* На вузьких екранах меню переїжджає у другий рядок панелі й гортається вбік */
+/* На вузьких екранах меню переїжджає у другий рядок панелі й гортається вбік.
+   Пальцем цілитись важче, ніж мишею, тому всі контроли тут не менші за 44 px. */
 @media (max-width:900px){
-  html{scroll-padding-top:106px}
-  .topbar__in{height:auto; flex-wrap:wrap; padding-top:10px; gap:var(--sp-3)}
+  :root{ --control-h: 44px }
+  html{scroll-padding-top:124px}
+  .topbar__in{height:auto; flex-wrap:wrap; padding-top:8px; gap:var(--sp-3)}
   .nav{
     order:3; width:100%; margin-left:0;
-    padding:2px 0 8px; gap:4px;
+    padding:0 0 6px; gap:4px;
     -webkit-overflow-scrolling:touch;
   }
-  .nav a{padding:6px 9px; font-size:11.5px}
-  .mark{margin-right:auto}
+  .nav a{
+    display:flex; align-items:center; min-height:44px;
+    padding:0 10px; font-size:12px;
+  }
+  .themebtn svg{width:17px; height:17px}
+  .lang button{padding:0 15px}
+  .mark{margin-right:auto; min-height:44px}
   .tools{margin-left:auto}
+  /* Окремі посилання-кнопки теж під палець; посилання всередині тексту
+     лишаються як є — їх розмір задає сам рядок. */
+  .skip{padding:12px 14px}
+  .spec a,
+  .foot__links a{display:inline-flex; align-items:center; min-height:44px}
+  .copybtn{display:inline-flex; align-items:center; min-height:44px; padding-left:10px}
+  .shot{touch-action:manipulation}
 }
-@media (max-width:420px){
-  .btn{padding:7px 10px; font-size:11px}
+/* Найвужчі екрани: монограма не вміщається поряд із контролами й переносить
+   панель на третій рядок. Ім'я стоїть одразу нижче, у шапці, тому прибираємо її. */
+@media (max-width:480px){
+  .mark{display:none}
+  .btn{padding:0 10px; font-size:11px}
   .topbar__in{gap:var(--sp-2)}
+  .tools{width:100%; justify-content:space-between}
 }
 
 /* =================================================================
@@ -434,9 +458,10 @@ a:hover{color:var(--copper)}
 }
 .viewer__close,
 .viewer__nav{
-  position:absolute; border-radius:8px;
+  position:absolute; border-radius:7px;
   border:1px solid rgba(255,255,255,.22); background:rgba(10,14,12,.45); color:#E7EDE9;
   cursor:pointer; line-height:1; display:grid; place-items:center;
+  font-family:var(--mono);
   transition:border-color .18s var(--ease), color .18s var(--ease);
 }
 .viewer__close{top:16px; right:16px; width:38px; height:38px; font-size:20px}
@@ -449,7 +474,8 @@ a:hover{color:var(--copper)}
 .viewer__close:hover,
 .viewer__nav:hover{border-color:var(--copper); color:var(--copper)}
 @media (max-width:600px){
-  .viewer__nav{width:38px; height:46px; font-size:22px}
+  .viewer__nav{width:44px; height:56px; font-size:24px}
+  .viewer__close{width:44px; height:44px}
   .viewer img{max-height:70vh}
 }
 
